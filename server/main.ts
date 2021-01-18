@@ -17,7 +17,15 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('button', (msg) => {
+    console.log('button pressed', msg);
+    // io.emit('button pressed', msg);
+  });
+  
 });
+
+
 
 const port = 2999;
 httpServer.listen(2999, () => {
