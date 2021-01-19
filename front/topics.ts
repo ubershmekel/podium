@@ -1,3 +1,5 @@
+// This file contains the topics for discussion
+
 const topicsText = `Prostitution	Prostitution should be legal	Prostitution should be illegal	Ethics
 Death Penalty	I'm for a death penalty	I'm against a death penalty	Ethics
 Donald Trump	I like Donald Trump	I don't like Donald Trump	Politics

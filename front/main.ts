@@ -1,3 +1,5 @@
+// This is the entry point for the browser client
+
 import App from './App.svelte';
 import { parseTopics } from './topics';
 

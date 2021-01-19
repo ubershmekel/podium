@@ -1,22 +1,36 @@
 <script lang="ts">
-	import { buttonPressed } from "./comms";
+	import { sendButtonPressed, sendMyNameIs, on, onConnect, sendHi } from "./comms";
+	import { getOrGenerateUserId, saveName } from "./data";
+	import { names } from "./socket-constants";
+	import type { Player, NewConnectionHi } from "./socket-constants";
+
+	export let username: string = 'mynameis';
 
 	export let title: string;
 	export let topics: any[];
 	export let answerA: string;
 	export let answerB: string;
 
-	export let users: string[];
+	export let users: Player[];
 	export let speakerA: string;
 	export let speakerB: string;
 
+	let gameStatePromise: Promise<any> = null;
+
+	$: if (username) {
+		console.log('username', username);
+		sendMyNameIs(username);
+		saveName(username);
+	}
+
+	
 	function randomInt(min: number, maxExcluded: number) {
 		const delta = maxExcluded - min;
 		return Math.floor(min + Math.random() * delta);
 	}
 
 	function handleNextTopic() {
-		buttonPressed('next topic');
+		sendButtonPressed('next topic');
 		console.log("happening");
 		const chosenI = randomInt(0, topics.length);
 		const chosen = topics[chosenI];
@@ -24,21 +38,42 @@
 		answerA = chosen.answerA;
 		answerB = chosen.answerB;
 
-		speakerA = users[0];
-		speakerB = users[1];
+		// speakerA = users[0];
+		// speakerB = users[1];
 	}
 
 	function handleEndRound() {
-		buttonPressed('end round');
+		sendButtonPressed('end round');
 	}
 
-	handleNextTopic();
+	function main() {
+		handleNextTopic();
+		
+		on(names.usersList, (userList) => {
+			console.log("userslist", userList);
+			users = userList;
+		});
+
+		onConnect(() => {
+			const gameId = 'onegame-temp-id';
+			console.log('connected');
+			const newConnectionHi: NewConnectionHi = {
+				userId: getOrGenerateUserId(),
+				gameId,
+				userName: username,
+			};
+			sendHi(newConnectionHi);
+		});
+	}
+
+	main();
 </script>
 
 <main>
 	<h1>Closing Arguments</h1>
+	<input bind:value={username}>
+
 	<div class="title">{title}</div>
-	<!-- <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p> -->
 
 	<button class="answer answer-text">{answerA}</button>
 
@@ -54,7 +89,11 @@
 		<button on:click={handleNextTopic}>Next Topic</button>
 	</div>
 
-	<p>users: {users} </p>
+	<p>users:
+		{#each users as user}
+			{user.userName};
+		{/each}
+	</p>
 </main>
 
 <style>

@@ -1,5 +1,6 @@
 
 import { Discussion, parseTopics } from '../front/topics';
+import type { Player } from '../front/socket-constants';
 
 interface Vote {
   user: string;
@@ -10,7 +11,7 @@ interface Vote {
 const topics = parseTopics();
 
 export class Game {
-  players: string[] = [];
+  players: Player[] = [];
   topicsPlayed: string[] = [];
   scores: {[user: string]: number} = {};
   discussion: Discussion;
