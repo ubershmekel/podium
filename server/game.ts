@@ -11,7 +11,7 @@ interface Vote {
 const topics = parseTopics();
 
 export class Game {
-  players: Player[] = [];
+  players: {[uid: string]: Player} = {};
   topicsPlayed: string[] = [];
   scores: {[user: string]: number} = {};
   discussion: Discussion;

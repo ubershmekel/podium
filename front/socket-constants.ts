@@ -1,5 +1,7 @@
 // These are constants that are shared between the client and server
 
+export const socketPort = 2999;
+
 export const names = {
   nameChange: "nameChange",
   buttonPress: "buttonPress",
@@ -10,6 +12,7 @@ export const names = {
 export interface Player { 
   userId: string;
   userName: string;
+  socket: any;
 }
 
 export interface NewConnectionHi {

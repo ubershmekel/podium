@@ -6,7 +6,7 @@ import { parseTopics } from './topics';
 const app = new App({
 	target: document.body,
 	props: {
-		users: ['joe', 'mo', 'tory', 'amanda', 'tom'],
+		users: [],
 		topics: parseTopics(),
 	}
 });

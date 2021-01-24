@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { sendButtonPressed, sendMyNameIs, on, onConnect, sendHi } from "./comms";
-	import { getOrGenerateUserId, saveName } from "./data";
+	import { getName, getOrGenerateUserId, saveName } from "./data";
 	import { names } from "./socket-constants";
 	import type { Player, NewConnectionHi } from "./socket-constants";
 
-	export let username: string = 'mynameis';
+	export let username: string = getName();
 
 	export let title: string;
 	export let topics: any[];

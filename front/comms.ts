@@ -3,9 +3,9 @@
 import { io } from 'socket.io-client';
 import type { Game } from '../server/game';
 import { getOrGenerateUserId } from './data';
-import { names, GameState, NewConnectionHi } from './socket-constants';
+import { names, GameState, NewConnectionHi, socketPort } from './socket-constants';
 
-const socket = io(':2999');
+const socket = io(':' + socketPort);
 
 export function sendHi(hi: NewConnectionHi) {
   socket.emit(names.userId, hi);
